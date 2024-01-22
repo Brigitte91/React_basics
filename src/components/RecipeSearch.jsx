@@ -4,16 +4,16 @@ import { data } from "../utils/data";
 import { RecipeListPage } from "../pages/RecipeListPage";
 import { useState } from "react";
 
-export const RecipeSearch = ({clickFn}) => {
+export const RecipeSearch = ({ clickFn }) => {
     const [searchField, setSearchField] = useState('');
     const matchedRecipes = data.hits.filter((recipe) => {
         const isNameMatch = recipe.recipe.label.toLowerCase().includes(searchField.toLowerCase());
         const isHealthLabelMatch = recipe.recipe.healthLabels.some((healthLabel) =>
-          healthLabel.toLowerCase().includes(searchField.toLowerCase())
+            healthLabel.toLowerCase().includes(searchField.toLowerCase())
         );
         return isHealthLabelMatch || isNameMatch;
-       
-    }); 
+
+    });
 
     const handleChange = (event) => {
         setSearchField(event.target.value);
@@ -21,8 +21,8 @@ export const RecipeSearch = ({clickFn}) => {
 
     return (
         <>
-        <Input onChange={handleChange} w={400} placeholder='Search recipes' variant='subtle'/>
-        <RecipeListPage clickFn={clickFn} recipes={matchedRecipes} />
+            <Input onChange={handleChange} w={[300, 400]} placeholder='Search recipes' variant='subtle' />
+            <RecipeListPage clickFn={clickFn} recipes={matchedRecipes} />
 
         </>
     )

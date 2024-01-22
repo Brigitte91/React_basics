@@ -7,17 +7,17 @@ export const RecipeListPage = ({ recipes, clickFn }) => {
 
   return (
 
-      <Flex
-      gap={12}
+    <Flex
+      gap={[6, 12]}
       flexDir={["column", "row"]}
       justifyContent="center"
       alignItems="center"
       flexWrap={'wrap'}
     >
-      {recipes.map(({id, recipe}) => (
+      {recipes.map(({ id, recipe }) => (
         <RecipeCard key={id} recipe={recipe} clickFn={clickFn} />
       ))}
-      </Flex>
+    </Flex>
 
   );
 };

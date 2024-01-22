@@ -4,23 +4,25 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
   Image,
   Heading,
   Text,
-  Tag,
   Flex,
   IconButton,
 } from "@chakra-ui/react";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
+import { RecipeTag } from "../components/UI/RecipeTag";
+import { Nutrients } from "../components/UI/Nutrients";
 
 export const RecipePage = ({ recipe, clickFn }) => {
   return (
-    <Card w={1200} variant="elevated" backgroundColor="white">
+    <Card variant="elevated" backgroundColor="white" w={[300, 1200]}>
       <CardHeader
         backgroundColor="white"
         borderTopLeftRadius={5}
         borderTopRightRadius={5}
+        justify='center'
+        align='center'
       >
         <IconButton
           aria-label="Back"
@@ -33,12 +35,12 @@ export const RecipePage = ({ recipe, clickFn }) => {
         />
       </CardHeader>
       <CardBody p={0}>
-        <Image src={recipe.image} objectFit={"cover"} w={1200} h={400} />
-        <Flex flexDir="row" p={10}>
-          <Flex w="50%" flexDir="column" gap={2}>
+        <Image src={recipe.image} objectFit='cover' w={[300, 1200]} h={[200, 400]} />
+        <Flex flexDir={['column', 'row']} p={[10, 20]}>
+          <Flex w={['100%', '60%']} flexDir='column' gap={2} mb={[5, 0]}>
             <Text textTransform="uppercase">{recipe.mealType}</Text>
 
-            <Heading fontSize="3xl" fontWeight="semibold">
+            <Heading fontSize={['xl', '3xl']} fontWeight="semibold">
               {recipe.label}
             </Heading>
             <Text>
@@ -55,7 +57,7 @@ export const RecipePage = ({ recipe, clickFn }) => {
                 </Text>
               </Text>
             </Text>
-            <Heading fontSize="xl" fontWeight="semibold">
+            <Heading fontSize='xl' fontWeight="semibold">
               Ingredients:
             </Heading>
             {recipe.ingredientLines.map((ingredient, index) => (
@@ -64,81 +66,46 @@ export const RecipePage = ({ recipe, clickFn }) => {
               </Text>
             ))}
           </Flex>
-          <Flex w="50%" flexDir="column" flexWrap="wrap" gap={2}>
-            <Text>Health labels:</Text>
-            <Flex flexWrap="wrap" gap={2}>
-              {recipe.healthLabels.map((healthLabel, index) => (
-                <Tag
-                  key={index}
-                  colorScheme="green"
-                  variant="subtle"
-                  textTransform="uppercase"
-                  fontSize="xs"
-                >
-                  {healthLabel}
-                </Tag>
-              ))}
-            </Flex>
-            <Text>Diet:</Text>
-            <Flex flexWrap="no-wrap" gap={2}>
-              {recipe.dietLabels.map((dietLabel, index) => (
-                <Tag
-                  key={index}
-                  colorScheme="blue"
-                  variant="subtle"
-                  textTransform="uppercase"
-                  fontSize="xs"
-                >
-                  {dietLabel}
-                </Tag>
-              ))}
-            </Flex>
-            <Text>Cautions:</Text>
-            <Flex flexWrap="no-wrap" gap={2}>
-              {recipe.cautions.map((cautions, index) => (
-                <Tag
-                  key={index}
-                  colorScheme="orange"
-                  variant="subtle"
-                  textTransform="uppercase"
-                  fontSize="xs"
-                >
-                  {cautions}
-                </Tag>
-              ))}
-            </Flex>
-            <Heading fontSize="md" fontWeight="semibold" mt={2}>
+          <Flex w={['100%', '40%']} flexDir='column' flexWrap='wrap' gap={2}>
+            {recipe.healthLabels.length > 0 && (
+              <>
+                <Text>Health labels:</Text>
+                <Flex flexWrap='wrap' gap={2}>
+                  {recipe.healthLabels.map((healthLabel, index) => (
+                    <RecipeTag key={index} colorScheme='green' label={healthLabel} />
+                  ))}
+                </Flex>
+              </>
+            )}
+            {recipe.dietLabels.length > 0 && (
+              <>
+                <Text>Diet:</Text>
+                <Flex flexWrap="no-wrap" gap={2}>
+                  {recipe.dietLabels.map((dietLabel, index) => (
+                    <RecipeTag key={index} colorScheme='blue' label={dietLabel} />
+                  ))}
+                </Flex>
+              </>
+            )}
+            {recipe.cautions.length > 0 && (
+              <>
+                <Text>Cautions:</Text>
+                <Flex flexWrap='no-wrap' gap={2}>
+                  {recipe.cautions.map((caution, index) => (
+                    <RecipeTag key={index} colorScheme='orange' label={caution} />
+                  ))}
+                </Flex>
+              </>
+            )}
+            <Heading fontSize={'md'} fontWeight="semibold" mt={2}>
               Total nutrients:
             </Heading>
-            <Flex flexDir='row' flexWrap='wrap' gap={5}>
-            <Flex flexDir='column' flexWrap='no-wrap'>
-                <Text >{recipe.calories.toFixed(0)}</Text>
-                <Text textTransform='uppercase' fontSize='xs' fontWeight='bold'>Calories</Text>
-            </Flex>
-            <Flex flexDir='column' flexWrap='no-wrap'>
-                <Text>{recipe.totalNutrients.CHOCDF.quantity.toFixed(0)}</Text>
-                <Text textTransform='uppercase' fontSize='xs' fontWeight='bold'>{recipe.totalNutrients.CHOCDF.label}</Text>
-            </Flex>
-            <Flex flexDir='column' flexWrap='no-wrap'>
-                <Text>{recipe.totalNutrients.PROCNT.quantity.toFixed(0)}</Text>
-                <Text textTransform='uppercase' fontSize='xs' fontWeight='bold'>{recipe.totalNutrients.PROCNT.label}</Text>
-            </Flex>
-            <Flex flexDir='column' flexWrap='no-wrap'>
-                <Text>{recipe.totalNutrients.FAT.quantity.toFixed(0)}</Text>
-                <Text textTransform='uppercase' fontSize='xs' fontWeight='bold'>{recipe.totalNutrients.FAT.label}</Text>
-            </Flex>
-            <Flex flexDir='column' flexWrap='no-wrap'>
-                <Text>{recipe.totalNutrients.CHOLE.quantity.toFixed(0)}</Text>
-                <Text textTransform='uppercase' fontSize='xs' fontWeight='bold'>{recipe.totalNutrients.CHOLE.label}</Text>
-            </Flex>
-            <Flex flexDir='column' flexWrap='no-wrap'>
-                <Text>{recipe.totalNutrients.NA.quantity.toFixed(0)}</Text>
-                <Text textTransform='uppercase' fontSize='xs' fontWeight='bold'>{recipe.totalNutrients.NA.label}</Text>
-            </Flex>
-          </Flex>
+
+            <Nutrients recipe={recipe} />
           </Flex>
         </Flex>
+
       </CardBody>
-    </Card>
+    </Card >
   );
 };
