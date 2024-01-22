@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Heading, Flex } from "@chakra-ui/react";
-import { data } from "../utils/data";
+
 import { RecipeCard } from "../components/RecipeCard";
 
 export const RecipeListPage = ({ recipes, clickFn }) => {
